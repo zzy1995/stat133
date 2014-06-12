@@ -1,0 +1,5 @@
+name= "Zhenyang Zhang"
+SID= "24382089"
+email= "supermikezzy@berkeley.edu"
+github_name= "zzy1995"
+status= "enrolled"
