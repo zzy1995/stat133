@@ -1,0 +1,17 @@
+{
+    "email": "supermikezzy@berkeley.edu", 
+    "github_name": "zzy1995", 
+    "grades": {
+        "lab2": {
+            "earned": 10, 
+            "hash": "32e3472280371b14026bb4cbe72741a5b9518176", 
+            "note": "", 
+            "penalty": 0, 
+            "possible": 10
+        }
+    }, 
+    "login": "zzy1995", 
+    "name": "Zhenyang Zhang", 
+    "status": "enrolled", 
+    "url": "git@github.com:zzy1995/stat133.git"
+}
