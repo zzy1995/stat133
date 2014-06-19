@@ -41,7 +41,7 @@ toCelcius <- function(temp.far) {
     # This function should take a vector of Farenheit temperature values
     # <temp.far> and return the values of each entry in Celcius
 
-    #your code here
+    return((temp.far-32)*5/9)
 
 }
 
@@ -71,7 +71,7 @@ calculateS <- function(data, selected.year, selected.day) {
                                                          selected.day > 31))
         stop('invalid date')
     
-    #your code here
+    return((subset(data, year==selected.year & day==selected.day)$max-subset(data, year==selected.year & day==selected.day)$min)/subset(data, year==selected.year & day==selected.day)$mean)
     
 }
 
@@ -102,6 +102,12 @@ tryCatch(
 #max.differences.day <- #your code here
 
 
+subset.2010 <- subset(temperature.data, year==2010)
+temp.differences <- subset.2010$max-subset.2010$min
+max.differences <- max(temp.differences)
+max.differences.day <- match(max.differences, temp.differences)
+
+
 # --------------------------------------------------------------
 # Problem 2 - b
 # --------------------------------------------------------------  
@@ -110,9 +116,15 @@ tryCatch(
 # temperatures below the 65th percentile. Use strict inequalities when
 # determining these subsets
     
-#your code here
+x=quantile(subset(temperature.data)$max,c(0.65))
+above=subset(temperature.data,max>x)
+below=subset(temperature.data,max<x)
+
 #mean.low.above <- #your code here
 #mean.low.below <- #your code here
+
+mean.low.above <- mean(subset(above)$min)
+mean.low.below <- mean(subset(below)$min)
 
 # --------------------------------------------------------------
 # Problem 3
@@ -125,14 +137,19 @@ tryCatch(
 # (as given by <animal.key>).  Store these vectors as <observed.diets> and
 # <observed.types> respectively.
 
-#your code here
+number<-match(observed.animals,animal.key$animal)
+info=animal.key[number,]
+
 #observed.diets <- #your code here
 #observed.types <- #your code here
+
+observed.diets <- subset(info)$diet
+observed.types <- subset(info)$type
 
 # Use your newly created vectors to calculate the total number of observed
 # animals that are both carnivores and mammals.  Store this variable as
 # <carnivore.mammals>
 
 #n.carnivore.mammals <- #your code here
-
+n.carnivore.mammals <- sum(observed.types=="mammal" & observed.diets=="carnivore")
     
