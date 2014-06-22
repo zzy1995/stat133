@@ -2,6 +2,13 @@
     "email": "supermikezzy@berkeley.edu", 
     "github_name": "zzy1995", 
     "grades": {
+        "assignment-1": {
+            "earned": 30, 
+            "hash": "085782b36791c3e579ebe7ade25845e484c60fd8", 
+            "note": "", 
+            "penalty": 0, 
+            "possible": 30
+        }, 
         "lab2": {
             "earned": 10, 
             "hash": "32e3472280371b14026bb4cbe72741a5b9518176", 
