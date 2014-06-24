@@ -21,6 +21,12 @@ percentile.norm = function(x, prob=0.75) {
     # the third quartile. 
 
     # your code here
+    medians=apply (x,2,quantile,probs=prob)
+    reference=mean(medians)
+    d=reference-medians
+    norm=sapply(1:14, function(i) x[,i]+d[i])
+    dimnames(norm)=dinames(x)
+    return(norm)
 }
 
 full.quantile.norm = function(x) {
@@ -44,6 +50,8 @@ full.quantile.norm2 = function(x) {
     # for each row.
 
     # your code here
+    x.sort=apply(x,2,sort)
+    x.rank=apply(x,2,rank)
 }
 
 
