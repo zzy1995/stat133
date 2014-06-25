@@ -32,7 +32,7 @@
 
 avgGoalDiff <- function(data, team.name) {
 
-    # your code here
+    return((data$gs[data$team==team.name]-data$ga[data$team==team.name])/data$gp[data$team==team.name])
  
 }
 
@@ -51,7 +51,7 @@ avgGoalDiff <- function(data, team.name) {
 
 cardFoulRatio <- function(data, team.name) {
 
-    # your code here
+    return((data$yc[data$team==team.name]+data$rc[data$team==team.name])/data$fouls[data$team==team.name])
  
 }
 
@@ -69,7 +69,10 @@ cardFoulRatio <- function(data, team.name) {
 
 rankAGD <- function(data) {
 
-    # your code here
+	teamlist=data[,1]
+	AGD=avgGoalDiff(data,teamlist)
+	ranked.teams=teamlist[order(AGD,decreasing=TRUE)]
+	return(ranked.teams)
 
 }
 
@@ -81,9 +84,13 @@ rankAGD <- function(data) {
 # "rankAGD" function on this subset and store the variable as <low.cfr.rank>.
 
 # wc.data <- # your code here
+wc.data <- read.table("world_cup.data",header=TRUE)
 #cfr.teams <- # your code here
+cfr.teams <-  sapply(wc.data$team,cardFoulRatio,data=wc.data)
 #low.cfr.teams <- # your code here
+low.cfr.teams <- wc.data$team[cfr.teams<=0.12]
 #low.cfr.rank <- # your code here
+low.cfr.rank <- rankAGD(wc.data[cfr.teams<=0.12,])
 
 
 library(RUnit)

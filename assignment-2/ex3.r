@@ -30,10 +30,15 @@ errMsg <- function(err) print(paste('ERROR:', err))
 # normalized (i.e. divided by) the standard deviation of <bwt> for the entire
 # subset.
 
+#babies.data = read.csv("babies.csv", header = TRUE) 
+
 smokeDiff <- function(data.subset) {
 
-    # your code here
-
+    smokers=subset(data.subset,smoke==1,select=bwt)
+    nonsmokers=subset(data.subset,smoke==0,select=bwt)
+    x=(colMeans(smokers)-colMeans(nonsmokers))/sd(data.subset$bwt)
+    names(x)<- NULL
+    return (x)
 }
 
 
@@ -57,10 +62,13 @@ smokeDiff <- function(data.subset) {
 
 heavyDiff <- function(data.subset, weight.cutoff) {
 
-    # your code here
-
+    heavy=subset(data.subset, weight>weight.cutoff, select=bwt)
+    light=subset(data.subset, weight<=weight.cutoff, select=bwt)
+    heavyDiff= (colMeans(heavy)-colMeans(light))/sd(data.subset$bwt)
+    names(heavyDiff) <- NULL
+    return(heavyDiff)
+    
 }
-
 # Implement the function "superSubset". This function should take the data set
 # and return the *indices* of all observations that match the specified subsetting
 # requirements. Your function should contain the following variables:
@@ -99,9 +107,11 @@ superSubset <- function(data, max.height, max.weight, max.age, parity) {
 # <mothers.subset>. Store this variable as <subset.diff>.
 
 
-# babies.data <- load the data here
+babies.data = read.csv("babies.csv", header = TRUE)
 # mothers.subset <- # your code here
+mothers.subset <- babies.data[superSubset(babies.data, 65, 150, 30, 0),]
 # subset.diff <- # your code here
+subset.diff <- smokeDiff(mothers.subset)
 
 # tests for smokeDiff
 tryCatch(checkEquals(-0.4639051, smokeDiff(babies.data[1:500, ]),
