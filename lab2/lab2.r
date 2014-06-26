@@ -17,6 +17,7 @@ load('prostatedata.Rda')
 # these patients are there?
 
 # n.prostate <- # your code here
+n.prostate<- sum(colnames(prost.data)=="2")
 
 # Suppose we're interested in the mean of the expression levels for each gene,
 # broken down by cancer status. Please create a 2 x 1000 matrix giving the
@@ -27,7 +28,16 @@ load('prostatedata.Rda')
 # cancer). Do the same for a trimmed mean with trim parameter of 0.1.
 
 # status.means <- # your code here
+non.pros=prost.data[,1:(102-n.prostate)]
+pros=prost.data[,(103-n.prostate):102]
+non.mean=apply(non.pros,1,mean)
+pros.mean=apply(pros,1,mean)
+status.means <- cbind(non.mean,pros.mean)
 # status.trim.means <- # your code here
+non.trim.mean= apply(non.pros,1,function(x) mean(x,trim=0.1))
+pros.trim.mean=apply(pros,1,function(x) mean(x,trim=0.1))
+status.trim.mean <- cbind(non.trim.mean, pros.trim.mean)
+
 
 
 # Back to the original dataset. We are interested in looking at the distribution
@@ -37,6 +47,8 @@ load('prostatedata.Rda')
 # the pch parameter to '.'.
 
 # your code here
+color.vector=c(rep("blue",(102-n.prostate)),rep("red",n.prostate))
+boxplot(prost.data,col=color.vector,pch='.')
 
 # Suppose we want to remove any gene that has an unusually low expression level
 # across many patients. We'll define "unusually low" as below the quantile
@@ -63,7 +75,9 @@ load('prostatedata.Rda')
 
 quantileCutoff <- function(data, q.cutoff, max.low.expr) {
 
-    # your code here
+	cutoff=quantile(data,q.cutoff)
+	low.cutoff=rowSums(data<cutoff)
+	return(which(low.cutoff>max.low.expr))
 }
 
 tryCatch(checkEquals(quantile.cutoff.t, quantileCutoff(test.data, 0.25, 10)),
@@ -90,7 +104,18 @@ tryCatch(checkEquals(quantile.cutoff.t, quantileCutoff(test.data, 0.25, 10)),
 
 tConvert <- function(gene) {
 
-    # your code here
+    means=by(gene,names(gene),mean)
+    st.devs=by(gene,names(gene),sd)
+    lengths=by(gene,names(gene),length)
+    
+    mean.1=means[[1]]
+    mean.2=means[[2]]
+    s.1=st.devs[[1]]
+    s.2=st.devs[[2]]
+    n.1=lengths[[1]]
+    n.2=lengths[[2]]
+    s.12=sqrt(((n.1-1)*s.1^2 + (n.2-1)*s.2^2) / (n.1 + n.2 - 2))
+    return((mean.1 - mean.2) / (s.12 * sqrt(1/n.1 + 1/n.2)))
 }
 
 tryCatch(checkEquals(0.5889667, unname(tConvert(test.data[1, ])),
@@ -115,7 +140,9 @@ tryCatch(checkEquals(0.5889667, unname(tConvert(test.data[1, ])),
 
 pValConverter <- function(data) {
 
-    # your code here
+	t.stats=apply(data,1,tConvert)
+	pval=pt(abs(t.stats),df=100)
+	return((1-pval)*2)
 }
 
 tryCatch(checkEquals(p.val.converter.t, pValConverter(test.data)),
@@ -132,7 +159,8 @@ tryCatch(checkEquals(p.val.converter.t, pValConverter(test.data)),
 # each bin.
 
 # your code here
-
+hist(pValConverter(prost.data),main="Prostate Data p-values",xlab="p-values",breaks=20,freq=FALSE)
+abline(h=1,col='red')
 
 # You should notice that your histogram contains a spike for the lowest
 # p-values. Some of these represent discoveries (i.e. genes whose expression
@@ -156,8 +184,11 @@ tryCatch(checkEquals(p.val.converter.t, pValConverter(test.data)),
 # discoveries
 
 FDR <- function(data, alpha) {
-
-    # your code here
+	expected.disc=alpha*nrow(data)
+	n.discoveries=sum(pValConverter(data)<alpha)
+	fdr=expected.disc/n.discoveries
+	return(fdr)
+    
 }
 
 tryCatch(checkEquals(0.1923077, FDR(prost.data[1:500, ], 0.005), tolerance=1e-6),
