@@ -20,7 +20,9 @@ load('ex3-tests.rda')
 
 meanByLevel <- function(data) {
 
-    # your code here
+	level.means=sapply(data[,names(data[sapply(data,is.numeric)])], function(x) by(x, data[!sapply(data,is.numeric)],mean))
+    return(level.means)
+    
 }
 
 tryCatch(checkIdentical(mean.by.level.t, meanByLevel(iris)), error=function(err)
@@ -47,8 +49,13 @@ tryCatch(checkIdentical(mean.by.level.t, meanByLevel(iris)), error=function(err)
 #   dimensions of your return value are correct.
 
 stdLevelDiff <- function(data) {
-
-    # your code here
+	
+	level.means=meanByLevel(data)
+    means=apply(data[,names(data[sapply(data,is.numeric)])],2,mean)
+    sds=apply(data[,names(data[sapply(data,is.numeric)])],2,sd)
+    level.diff=sapply(1:ncol(level.means),function(i) (level.means[,i]-means[i])/sds[i])
+    colnames(level.diff)=colnames(level.means)
+    return(level.diff)
 }
 
 tryCatch(checkIdentical(std.level.diff.t, abs(stdLevelDiff(iris))),

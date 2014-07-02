@@ -21,8 +21,13 @@ load('ex2-tests.rda')
 #   variance given by <var> and mean given by the jth entry of <means>.
 
 simpleNormSim <- function(means, sim.size=50, var=1) {
-
-    # your code here
+	
+	simulation=list()
+    for(i in 1:length(means)){
+    	new.list=rnorm(sim.size,means[i],sqrt(var))
+    	simulation[[i]]=new.list
+    }
+    return(simulation)
 }
 
 set.seed(47)
@@ -54,7 +59,12 @@ tryCatch(checkIdentical(simple.norm.sim.t, simpleNormSim(c(25, 50, 75))),
 advancedNormSim <- function(sim.sizes, means, vars) {
 
     stopifnot(all.equal(length(sim.sizes), length(means), length(vars)))
-    # your code here
+    simulation=list()
+    for(i in 1:length(means)){
+    	new.list=rnorm(sim.sizes[i],means[i],sqrt(vars[i]))
+    	simulation[[i]]=new.list
+    }
+    return(simulation)
 }   
 
 sizes.t <- c(25, 50, 25, 50)

@@ -18,8 +18,13 @@ load('ex1-tests.rda')
 # second the upper bound
 
 outlierCutoff <- function(data) {
-    # your code here
-    
+	iqr=apply(data,2,function(x) quantile(x,0.75)-quantile(x,0.25))
+	median.row=apply(data,2,median)
+	row1=median.row-1.5*iqr
+    row2=median.row+1.5*iqr
+    outlier.cutoffs=rbind(row1,row2)
+    rownames(outlier.cutoffs)=NULL
+    return(outlier.cutoffs)
 }
 
 tryCatch(checkIdentical(outlier.cutoff.t, outlierCutoff(ex1.test)),
@@ -50,7 +55,11 @@ removeOutliers <- function(data, max.outlier.rate) {
 
     stopifnot(max.outlier.rate>=0 & max.outlier.rate<=1)
     
-    # your code here
+    outlier.cutoffs = outlierCutoff(data)
+    tf.table = apply(data,1, function(x) x>outlier.cutoffs[1,] & x<outlier.cutoffs[2,])
+    vector.sum=colSums(tf.table)
+    tf.vector=vector.sum>=ncol(data)*(1-max.outlier.rate)
+    return(data[(1:length(unlist(tf.vector)))[unlist(tf.vector)],])
 }
 
 tryCatch(checkIdentical(remove.outlier.t, removeOutliers(ex1.test, 0.25)),
