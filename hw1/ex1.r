@@ -16,6 +16,7 @@
 # the variable <file.name>. Any observations that have more NA variables than
 # <max.na> should be removed from this data frame.
 
+#test
 
 readRemove <- function(file.name, max.na=0, sep=',', header=F) {
 
