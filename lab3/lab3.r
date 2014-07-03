@@ -36,11 +36,32 @@ load('lab3-tests.rda')
 #   (black) and smokers (red). Do not worry about any other parameters for
 #   the plot.
 
-stratifiedTest <- function(data, group.variable, group.cutoff) {
+stratifiedTest <- function(data, group.variable, group.cutoff, alternative='less') {
 
     stopifnot(group.variable %in% names(data)[2:6]) 
-
-    # your code here
+	below=data[data[[group.variable]] <= group.cutoff, ]
+    above=data[data[[group.variable]] > group.cutoff, ]
+	smoke.below=subset(below, smoke == 1, select = bwt)
+	nsmoke.below=subset(below, smoke == 0, select = bwt)
+	smoke.above=subset(above, smoke == 1, select = bwt)
+	nsmoke.above=subset(above, smoke == 0, select = bwt)
+    test1=t.test(smoke.below, nsmoke.below, alternative)
+    t.outputs.1=list(t.stat=test1$statistic, p.val=test1$p.value)
+    test2=t.test(smoke.above, nsmoke.above, alternative)
+    t.outputs.2=list(t.stat=test2$statistic, p.val=test2$p.value)
+    t.outputs <- list(t.outputs.1,t.outputs.2)
+	
+	vector.nsmoke.below=as.vector(nsmoke.below[,1])
+	vector.smoke.below=as.vector(smoke.below[,1])
+	vector.nsmoke.above=as.vector(nsmoke.above[,1])
+	vector.smoke.above=as.vector(smoke.above[,1])
+	par(mfrow=c(2,1))
+	plot(density(vector.nsmoke.below),)
+    lines(density(vector.smoke.below), col='red')
+    plot(density(vector.nsmoke.above),)
+    lines(density(vector.smoke.above), col='red')
+    return(t.outputs)
+    
 }
 
 output.t1 <- stratifiedTest(babies.data, "height", 64)
