@@ -2,7 +2,39 @@
     "email": "supermikezzy@berkeley.edu", 
     "github_name": "zzy1995", 
     "grades": {
-        "assignment-1": {
+        "hw1": {
+            "earned": 29, 
+            "hash": "96610c2a8f8038ed48a25bcff4ea74910be68611", 
+            "note": "", 
+            "parts": {
+                "ex1": {
+                    "earned": 6, 
+                    "possible": 6
+                }, 
+                "ex2": {
+                    "earned": 8, 
+                    "possible": 8
+                }, 
+                "ex3": {
+                    "earned": 8, 
+                    "possible": 8
+                }, 
+                "ex4": {
+                    "earned": 7, 
+                    "possible": 8
+                }
+            }, 
+            "penalty": 0, 
+            "possible": 30
+        }, 
+        "lab0": {
+            "earned": 10, 
+            "hash": "32e3472280371b14026bb4cbe72741a5b9518176", 
+            "note": "", 
+            "penalty": 0, 
+            "possible": 10
+        }, 
+        "lab1": {
             "earned": 30, 
             "hash": "085782b36791c3e579ebe7ade25845e484c60fd8", 
             "note": "", 
@@ -10,11 +42,21 @@
             "possible": 30
         }, 
         "lab2": {
-            "earned": 10, 
-            "hash": "32e3472280371b14026bb4cbe72741a5b9518176", 
+            "earned": 26, 
+            "hash": "96610c2a8f8038ed48a25bcff4ea74910be68611", 
             "note": "", 
+            "parts": {
+                "lab2": {
+                    "earned": 18, 
+                    "possible": 22
+                }, 
+                "lab2-figures": {
+                    "earned": 8, 
+                    "possible": 8
+                }
+            }, 
             "penalty": 0, 
-            "possible": 10
+            "possible": 30
         }
     }, 
     "login": "zzy1995", 
