@@ -23,7 +23,7 @@ errMsg <- function(err) print(err)
 # numbers 1 to 6.
 
 flip.sum = function(n=10) {
-    # your code here
+    return(sum(sample(1:6,n,replace=TRUE)))
 }
 
 set.seed(47)
@@ -40,4 +40,4 @@ tryCatch(checkEquals(sums, c(flip.sum(5), flip.sum(5), flip.sum(5))),
 # 10,000 times. Plot the histogram of random.sums. Make sure
 # to plot the density (not the counts) and set the breaks to 50. 
 
-# your code here
+hist(fl)
