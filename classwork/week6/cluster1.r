@@ -35,3 +35,16 @@ group = rbind(healthy.subjects, sick.subjects)
 #   b. 1st vs 3rd PC 
 #   b. 3rd vs 4th PC 
 
+cols=c('red','blue')
+plotPCA= function(x){
+plot(x,main = "Simulated MVG (n=200,p=30)",
+col= cols[c(rep(1,100),rep(2,100))])
+legend("topright", c("healthy","sick"),
+      fill=cols)
+}
+
+par(mfrow=c(2,2))
+plotPCA(pca$x[,1:2])
+plotPCA(pca$x[,2:3])
+plotPCA(pca$x[,c(1,3)])
+plotPCA(pca$x[,3:4])
