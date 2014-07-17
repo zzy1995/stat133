@@ -19,10 +19,12 @@ load('ex1-tests.rda')
 dataDist <- function(data, norm='euclidean') {
 
     # your code here
+    df=data[,sapply(data,is.numeric)]
+	return(dist(df,method=norm))
 
 }
 
-tryCatch(checkEquals(data.dist.t, dataDist(iris)), error=function(err)
+tryCatch(checkEquals(c(data.dist.t), c(dataDist(iris))), error=function(err)
          errMsg(err))
 
 
@@ -45,6 +47,7 @@ tryCatch(checkEquals(data.dist.t, dataDist(iris)), error=function(err)
 clustLabel <- function(data, norm='euclidean', k) {
 
     # your code here
+    return(cutree(hclust(dataDist(data,norm)),k))
 
 }
 
@@ -75,6 +78,13 @@ tryCatch(checkEquals(clust.label.t, clustLabel(iris, k=3)),
 evalClusters <- function(data, true.labels, norm='euclidean', k) {
 
     # your code here
+    groups=clustLabel(data,norm=norm,k=k)
+    proportion=by(true.labels,groups,function(cluster){
+    	max.group=names(which.max(table(cluster)))
+    	sum(cluster == max.group)/length(cluster)
+    	})
+    	
+    return(as.vector(proportion))
 
 }
 
@@ -102,6 +112,12 @@ tryCatch(checkEquals(eval.clusters.t, evalClusters(iris, iris$Species, k=3)),
 heightCluster <- function(data, norm='euclidean', h, ...) {
     
     # your code here
+    dist=dataDist(data,norm=norm)
+	data.clusters = hclust(dist)
+	groups = cutree(data.clusters,h=h)
+	plot(data.clusters,...)
+	abline(h=h, col="red")
+	return(groups)
 
 }
 
