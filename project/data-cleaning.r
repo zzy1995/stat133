@@ -2,7 +2,11 @@
 # omitted every question have been removed. Store the **number** of
 # observations that you omitted as the variable <n.no.response>
 
+data=read.table('lingdata.txt',header=TRUE)
+idcs.NA=apply(data,1,anyNA)
 # n.no.response <- your code here
+n.no.response=sum(idcs.NA)
+data.subset=data[idcs.NA,]
 
 # plot a histogram of the number of omitted responses for each observation
 # after removing observations that omitted all questions
@@ -14,6 +18,8 @@
 # omitted. Remove all observations with more than this number of omitted
 # questions.
 
+
 # save the subset of remaining observations in a file named
 # "ling-data-clean.data" 
 
+save(data.subset,file="ling-data-clean.data")
