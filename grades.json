@@ -189,6 +189,35 @@
             }, 
             "penalty": 0, 
             "possible": 30
+        }, 
+        "midterm": {
+            "earned": 23, 
+            "hash": "ec0f4c0d2fef02a8b5f0b3ce2b35ee84c67d7c29", 
+            "note": "", 
+            "parts": {
+                "ex1": {
+                    "earned": 3, 
+                    "possible": 4
+                }, 
+                "ex1_fig": {
+                    "earned": 0, 
+                    "possible": 5
+                }, 
+                "ex2": {
+                    "earned": 18, 
+                    "possible": 18
+                }, 
+                "extra_credit": {
+                    "earned": 2, 
+                    "possible": 2
+                }, 
+                "extra_credit_fig": {
+                    "earned": 0, 
+                    "possible": 1
+                }
+            }, 
+            "penalty": 0, 
+            "possible": 30
         }
     }, 
     "login": "zzy1995", 

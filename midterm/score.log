@@ -1,0 +1,95 @@
+INFO:root:Executed R('load(\'../instructor/midterm/ex1.rda\')')
+INFO:root:(1 points) R('fm$bmi == fbmi')[0] is True
+INFO:root:(1 points) R('fm$overWt == foverWt')[0] is True
+ERROR:root:(1 points) Checking R('fm == family')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Traceback error
+ERROR:root:Got exception:
+Traceback (most recent call last):
+  File "build/bdist.linux-x86_64/egg/gradebook/score.py", line 140, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/usr/lib64/python2.7/site-packages/rpy2/robjects/__init__.py", line 240, in __call__
+    res = self.eval(p)
+  File "/usr/lib64/python2.7/site-packages/rpy2/robjects/functions.py", line 86, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/usr/lib64/python2.7/site-packages/rpy2/robjects/functions.py", line 35, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in Ops.factor(left, right) : level sets of factors are different
+
+ERROR:root:Traceback (most recent call last):
+  File "build/bdist.linux-x86_64/egg/gradebook/score.py", line 140, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/usr/lib64/python2.7/site-packages/rpy2/robjects/__init__.py", line 240, in __call__
+    res = self.eval(p)
+  File "/usr/lib64/python2.7/site-packages/rpy2/robjects/functions.py", line 86, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/usr/lib64/python2.7/site-packages/rpy2/robjects/functions.py", line 35, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in Ops.factor(left, right) : level sets of factors are different
+
+Traceback (most recent call last):
+  File "build/bdist.linux-x86_64/egg/gradebook/score.py", line 140, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/usr/lib64/python2.7/site-packages/rpy2/robjects/__init__.py", line 240, in __call__
+    res = self.eval(p)
+  File "/usr/lib64/python2.7/site-packages/rpy2/robjects/functions.py", line 86, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/usr/lib64/python2.7/site-packages/rpy2/robjects/functions.py", line 35, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in Ops.factor(left, right) : level sets of factors are different
+
+ERROR:root:(1 points) Checking Are all the circles plotted correctly?
+ERROR:root:... Expecting: False
+ERROR:root:... But got:   n
+ERROR:root:(1 points) Checking Are the circles correctly colored?
+ERROR:root:... Expecting: False
+ERROR:root:... But got:   n
+ERROR:root:(1 points) Checking Are xlim and ylim set correctly?
+ERROR:root:... Expecting: False
+ERROR:root:... But got:   n
+ERROR:root:(1 points) Checking Is the legend in the topright corner?
+ERROR:root:... Expecting: False
+ERROR:root:... But got:   n
+ERROR:root:(1 points) Checking Are the circles and labels in the legend correct?
+ERROR:root:... Expecting: False
+ERROR:root:... But got:   n
+INFO:root:Executed R('d0 = data.frame(a=rnorm(2))')
+INFO:root:Executed R('d1 = data.frame(a=rnorm(2), b=as.factor(1:2))')
+INFO:root:Executed R('d2 = data.frame(a=as.factor(1:2), b=as.factor(1:2))')
+INFO:root:(1 points) R('0 == num.factors(d0)')[0] is True
+INFO:root:(1 points) R('1 == num.factors(d1)')[0] is True
+INFO:root:(1 points) R('2 == num.factors(d2)')[0] is True
+INFO:root:Executed R('l0 = list(d0, d0)')
+INFO:root:Executed R('l1 = list(d0, d1, d0)')
+INFO:root:Executed R('l2 = list(d0, d1, d1)')
+INFO:root:(1 points) R('0 == num.factors2(l0)')[0] is True
+INFO:root:(1 points) R('1 == num.factors2(l1)')[0] is True
+INFO:root:(1 points) R('2 == num.factors2(l2)')[0] is True
+INFO:root:Executed R('a = 1:5')
+INFO:root:Executed R('b = 5:1')
+INFO:root:(1 points) R('a*a == sum.or.product(a,a)')[0] is True
+INFO:root:(1 points) R('a*b == sum.or.product(a,b)')[0] is True
+INFO:root:(1 points) R('a*b == sum.or.product(b,a)')[0] is True
+INFO:root:(1 points) R('a+2*b == sum.or.product((a+b),b)')[0] is True
+INFO:root:Executed R('y0 = 2')
+INFO:root:Executed R('odd0 = FALSE')
+INFO:root:Executed R('y1 = c(rep(0,5),rep(-2,2))')
+INFO:root:Executed R('odd1 = rep(FALSE,7)')
+INFO:root:(1 points) R('odd0 == odd(y0)')[0] is True
+INFO:root:(1 points) R('!odd0 == odd(y0, flip=TRUE)')[0] is True
+INFO:root:(1 points) R('odd1 == odd(y1)')[0] is True
+INFO:root:(1 points) R('!odd1 == odd(y1, flip=TRUE)')[0] is True
+INFO:root:(1 points) R('1 == sum.adm(1:2)')[0] is True
+INFO:root:(1 points) R('1 == sum.adm(-c(1:2))')[0] is True
+INFO:root:(1 points) R('is.na(sum.adm(c(1:2,NA)))')[0] is True
+INFO:root:(1 points) R('1 == sum.adm(c(1:2,NA), na.rm=TRUE)')[0] is True
+INFO:root:Executed R('set.seed(42)')
+INFO:root:(1 points) R('all.equal(c(42,39), replicate(2, flip.sum()))')[0] is True
+INFO:root:(1 points) R('all.equal(c(7,12), replicate(2, flip.sum(2)))')[0] is True
+ERROR:root:(1 points) Checking Does the histogram look correct?
+ERROR:root:... Expecting: False
+ERROR:root:... But got:   n
+INFO:root:You got a 23 out of 30.
