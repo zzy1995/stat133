@@ -172,6 +172,23 @@
             }, 
             "penalty": 0, 
             "possible": 30
+        }, 
+        "lab5": {
+            "earned": 30, 
+            "hash": "fc3ea96d25261e97623defdca5989248ce79a859", 
+            "note": "", 
+            "parts": {
+                "ex1": {
+                    "earned": 24, 
+                    "possible": 24
+                }, 
+                "ex1_fig": {
+                    "earned": 6, 
+                    "possible": 6
+                }
+            }, 
+            "penalty": 0, 
+            "possible": 30
         }
     }, 
     "login": "zzy1995", 
