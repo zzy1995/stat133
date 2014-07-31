@@ -36,7 +36,7 @@ load('hw6-tests.rda')
 
 tpr <- function(threshold, predicted, truth) {
 
-    # your code here
+    return(sum(predicted>threshold & truth==1)/sum(truth==1))
 }
 
 tryCatch(checkEquals(hw6$tpr.t1, tpr(0.5, hw6$tpr.pr, hw6$tpr.tr)),
@@ -60,7 +60,7 @@ tryCatch(checkEquals(hw6$tpr.t1, tpr(0.5, hw6$tpr.pr, hw6$tpr.tr)),
 
 fpr <- function(threshold, predicted, truth) {
 
-    # your code here
+    return(sum(predicted>threshold & (truth==0))/sum(truth==0))
 }
 
 tryCatch(checkEquals(hw6$fpr.t1, fpr(0.5, hw6$tpr.pr, hw6$tpr.tr)),
@@ -91,7 +91,16 @@ tryCatch(checkEquals(hw6$fpr.t1, fpr(0.5, hw6$tpr.pr, hw6$tpr.tr)),
 
 plotROC <- function(predicted, truth, add=F, ...) {
 
-    # your code here
+    tprs=sapply(0:100,function(i) tpr(i/100,predicted,truth))
+    fprs=sapply(0:100,function(i) fpr(i/100,predicted,truth))
+    if(!add){
+    	plot(fprs,tprs,main='ROC curve',xlim=c(0,1),ylim=c(0,1),xlab='fpr',ylab='tpr',type='l',...)
+    	lines(c(1,0),c(1,0))
+    } else{
+    	lines(fprs,tprs,...)
+    }
+    return(list(tprs=tprs,fprs=fprs))
+    
 }
 
 tryCatch(checkEquals(hw6$plotROC.t1, plotROC(hw6$tpr.pr, hw6$tpr.tr)),
@@ -110,6 +119,8 @@ library(rpart)
 library(randomForest)
 spam <- list()
 spam$data <- read.csv('spam-data.csv', header=F)
+spam$data$V58 <- factor(spam$data$V58)
+colnames(spam$data)[58] <- "spam"
 
 
 # Before running a classifier, please split your data into training and test
@@ -119,6 +130,10 @@ spam$data <- read.csv('spam-data.csv', header=F)
 # "spam".
 # ***Make sure to set your seed to 47 before sampling***
 
+set.seed(47)
+idcs=sample(1:nrow(spam$data),3500)
+spam$train=spam$data[idcs,]
+spam$test=spam$data[-idcs,]
 
 # fit a recursive partitioning classifier and a random forest classifier to your
 # training data. Use these to predict the probability that each observation is a
@@ -129,13 +144,26 @@ spam$data <- read.csv('spam-data.csv', header=F)
 # parameters.  *** Make sure to set your seed to 47 before fitting your
 # models***
 
+set.seed(47)
+p.rp = rpart(spam~., method='class', data=spam$train)
 
-# Evaluate your two models using your plotROC function. Store the outputs as
+pred.rp=predict(p.rp,spam$test,type='prob')
+
+p.rf=randomForest(spam~.,method='class',data=spam$train,ntree=250)
+
+pred.rf=predict(p.rf,spam$test,type='prob')
+
+
+# Evaluate your t`wo models using your plotROC function. Store the outputs as
 # <rp.output> and <rf.output> respectively. Please plot the ROC curves in the
 # same plot with the rp curve blue and the rf curve red.  NOTE: your may need to
 # convert your spam variable back to a 0-1 valued vector depending on how you
 # wrote your plotROC function.
 # Add a legend in the bottom right indicating the the model that each curve represents.
+
+rp.output=plotROC(pred.rp[,2],spam$test$spam,add=F,col='blue')
+rf.output=plotROC(pred.rf[,2],spam$test$spam,add=T,col='red')
+legend("bottomright",c('recursive partitioning','random forest'),col=c('blue','red'),lty=1)
 
 # In the spam scenario, a true positive represents classifying spam email correctly
 # while a false positive represents classifying a good email as spam. For each
@@ -158,7 +186,8 @@ spam$data <- read.csv('spam-data.csv', header=F)
 
 constrainedFPR <- function(tpr, fpr, tpr.constraint) {
 
-    # your code here
+	if(length(tpr)!=length(fpr)) stop('unequal input lengths')
+    return(min(fpr[tpr>=tpr.constraint]))
 }
 
 tryCatch(checkEquals(hw6$constrainedFPR.t1, constrainedFPR(hw6$plotROC.t1$tprs,
@@ -176,3 +205,8 @@ tryCatch(checkEquals(hw6$constrainedFPR.t1, constrainedFPR(hw6$plotROC.t1$tprs,
 # <min.fpr.rf>? Use the same grid of probabilities as in your plotROC function
 # and store these values as <rp.threshold>.
 
+min.fpr.rp=constrainedFPR(rp.output$tprs,rp.output$fprs,0.95)
+min.fpr.rf=constrainedFPR(rf.output$tprs,rf.output$fprs,0.95)
+
+rp.threshold= which(rp.output$fprs==min.fpr.rp & rp.output$tprs>=0.95)/100
+rf.threshold= which(rf.output$fprs==min.fpr.rf & rf.output$tprs>=0.95)/100
