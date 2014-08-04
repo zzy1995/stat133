@@ -223,5 +223,6 @@
     "login": "zzy1995", 
     "name": "Zhenyang Zhang", 
     "status": "enrolled", 
-    "url": "git@github.com:zzy1995/stat133.git"
+    "url": "git@github.com:zzy1995/stat133.git", 
+    "type": "students"
 }
