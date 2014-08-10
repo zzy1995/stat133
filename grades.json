@@ -265,6 +265,19 @@
                     "earned": 30
                 }
             }
+        }, 
+        "lab8": {
+            "note": "", 
+            "hash": "b159e8f0f4a528d25e6f7ea001ea9730b56c7c9a", 
+            "earned": 30, 
+            "possible": 30, 
+            "penalty": 0, 
+            "parts": {
+                "ex1": {
+                    "possible": 30, 
+                    "earned": 30
+                }
+            }
         }
     }, 
     "login": "zzy1995", 
