@@ -86,21 +86,21 @@
             }
         }, 
         "hw4": {
-            "earned": 24, 
-            "hash": "3f4cf3c45e33efc31b59973ced2b492b2cb341a1", 
             "note": "", 
+            "hash": "3f4cf3c45e33efc31b59973ced2b492b2cb341a1", 
+            "earned": 30, 
+            "possible": 30, 
+            "penalty": 0, 
             "parts": {
                 "ba_fig": {
                     "earned": 7, 
                     "possible": 7
                 }, 
                 "birth_assassination": {
-                    "earned": 17, 
-                    "possible": 23
+                    "possible": 23, 
+                    "earned": 23
                 }
-            }, 
-            "penalty": 0, 
-            "possible": 30
+            }
         }, 
         "lab0": {
             "earned": 10, 
