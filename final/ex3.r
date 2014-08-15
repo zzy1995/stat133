@@ -35,7 +35,8 @@ load("ex3.rda")
 # of NA values is strictly greater than the 'threshold'.
 
 too.many.na = function(df, threshold, axis) {
-    # your code here
+    na.count=apply(df,axis,function(x) sum(is.na(x))/length(x))
+    return(unname(which(na.count>threshold)))
 }
 
 testdf1 = data.frame(1:4, c(NA,1,2,3))
@@ -68,7 +69,14 @@ tryCatch(checkEquals(0, length(too.many.na(testdf1, 0.6, 1))),
 #    IQR is the difference Q3 - Q1
 
 outlier.cutoff = function(x, rm.na){
-    # your code here
+    if(rm.na){
+    	data=x[!is.na(x)]
+    } else{
+    	data=x
+    }
+    lower=quantile(data)[2]-IQR(data)*2.5
+    upper=quantile(data)[4]+IQR(data)*2.5
+    return(c(lower,upper))
 }
 
 set.seed(42)
@@ -97,7 +105,8 @@ tryCatch(checkEquals(cuts, unname(outlier.cutoff(x, TRUE)), tolerance=1e-6),
 # the lower bound) 
 
 remove.outliers = function(df, cuts) {
-    # your code here
+    det=apply(df,1,function(row) sum(row<cuts[,1] | row>cuts[,2]))
+    return(det[det,])
 }
 
 # Now you are going to create some new datastructures by calling these functions

@@ -17,6 +17,8 @@ load('ex2.rda')
 # fit.final = your code here
 # fit.labs = your code here
 
+fit.final=lm(final~hw,grades)
+fit.labs=lm(labs~hw,grades)
 
 # (2 points)
 # Please use the diagnostic methods discussed in class to determine which of the
@@ -26,7 +28,7 @@ load('ex2.rda')
 #
 # "final" or "labs"
 
-# contant.var.model = your code here
+contant.var.model = 'labs'
 
 
 # (3 points)
@@ -41,6 +43,10 @@ load('ex2.rda')
 # labs.intercept = your code here
 # final.r.sq = your code here
 
+final.slope=fit.final$coefficients[2]
+labs.intercept=fit.labs$coefficients[1]
+final.r.sq=summary(fit.final)$r.squared
+
 # (2 points)
 # Consider a model that predicts an individual's final score using the following
 # formula: y.hat = beta*hw, where
@@ -52,7 +58,7 @@ load('ex2.rda')
 # Please compute the squared residuals for this model (this should be a length
 # 100 numeric vector). Store this as the variable <sq.residuals>.
 
-# sq.residuals = your code here
+sq.residuals = (grades$final-final.slope*2*grades$hw)^2
 
 
 # (3 points)
@@ -63,3 +69,6 @@ load('ex2.rda')
 
 # final.pi = your code here
 # prop.within = your code here
+final.pi=predict.lm(fit.final,newdata=data.frame(hw=grades$hw),interval="confidence",level=0.9)[,2:3]
+
+prop.within=sum(grades$final<final.pi[,2] & grades$final>final.pi[,1])/nrow(grades)
