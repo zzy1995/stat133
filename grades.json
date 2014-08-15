@@ -295,6 +295,23 @@
                     "earned": 0
                 }
             }
+        }, 
+        "hw8": {
+            "note": "", 
+            "hash": "aaf933b2440fc0558be5eda23bf33b996db2281e", 
+            "earned": 22, 
+            "possible": 30, 
+            "penalty": 0, 
+            "parts": {
+                "ex1_fig": {
+                    "possible": 4, 
+                    "earned": 4
+                }, 
+                "ex1": {
+                    "possible": 26, 
+                    "earned": 16
+                }
+            }
         }
     }, 
     "login": "zzy1995", 
